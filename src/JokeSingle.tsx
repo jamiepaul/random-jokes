@@ -2,7 +2,7 @@ type JokeDisplayProps = {
   content: string;
 };
 
-function JokeDisplay({ content }: JokeDisplayProps) {
+function JokeSingle({ content }: JokeDisplayProps) {
   return (
     <article className="joke w-96 mx-auto">
       <blockquote className="p-6 bg-blue-800 text-white">
@@ -12,4 +12,4 @@ function JokeDisplay({ content }: JokeDisplayProps) {
   );
 }
 
-export default JokeDisplay;
+export default JokeSingle;
