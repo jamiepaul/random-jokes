@@ -1,4 +1,4 @@
-import { APIResponse } from '../App';
+import { APIResponse } from '../Jokes';
 
 const url = 'https://icanhazdadjoke.com/search?limit=30&page=1';
 const options = {
