@@ -4,11 +4,9 @@ type JokeDisplayProps = {
 
 function JokeSingle({ content }: JokeDisplayProps) {
   return (
-    <article className="joke w-96 mx-auto">
-      <blockquote className="p-6 bg-blue-800 text-white">
-        <p>{content}</p>
-      </blockquote>
-    </article>
+    <blockquote>
+      <p className="text-gray-700 text-lg">{content}</p>
+    </blockquote>
   );
 }
 

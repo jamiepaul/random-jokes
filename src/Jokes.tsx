@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchJokes } from './utils/fetchJokes';
-import JokeSingle from './JokeSingle';
-import { useState } from 'react';
 import { getRandom } from './utils/getRandom';
+import JokeSingle from './JokeSingle';
 
 export type Joke = {
   id: string;
@@ -18,6 +18,7 @@ export type APIResponse = {
 
 function Jokes() {
   const [randomJoke, setRandomJoke] = useState<Joke | null>(null);
+  const [loading, setLoading] = useState(false);
   const {
     data: jokes,
     isPending,
@@ -47,21 +48,27 @@ function Jokes() {
 
   return (
     <>
-      <div>
-        {!randomJoke && <p>Click the button to display a joke</p>}
-        {randomJoke && <JokeSingle content={randomJoke.joke} />}
-      </div>
+      <article className="min-h-[120px] bg-gray-50 rounded-lg p-4 mb-6">
+        {randomJoke ? (
+          <JokeSingle content={randomJoke.joke} />
+        ) : (
+          <p className="text-gray-400 text-center">
+            Your joke will appear here
+          </p>
+        )}
+      </article>
+
       <button
-        className="p-4 font-bold bg-white relative after:absolute after:top-0 after:left-0 after:w-full after:h-full after:-z-10 after:bg-black after:rounded-md rounded-md border-black border-2 hover:after:top-2 hover:after:left-2"
         onClick={() => {
+          setLoading(true);
           setRandomJoke(getRandom(jokes));
+          setLoading(false);
         }}
+        disabled={loading}
+        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Generate Joke
+        {loading ? 'Loading...' : 'Get Random Joke'}
       </button>
-      {jokes?.map(({ id, joke }: Joke) => (
-        <JokeSingle key={id} content={joke} />
-      ))}
     </>
   );
 }
