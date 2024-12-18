@@ -1,7 +1,4 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchJokes } from './utils/fetchJokes';
-import { getRandom } from './utils/getRandom';
+import { useJokes } from '../hooks/useJokes';
 import JokeSingle from './JokeSingle';
 
 export type Joke = {
@@ -17,19 +14,7 @@ export type APIResponse = {
 };
 
 function Jokes() {
-  const [randomJoke, setRandomJoke] = useState<Joke | null>(null);
-  const [loading, setLoading] = useState(false);
-  const {
-    data: jokes,
-    isPending,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ['jokes'],
-    queryFn: fetchJokes,
-    select: (data: APIResponse) => data.results,
-    staleTime: 60 * 1000 * 120, // 2hrs
-  });
+  const { isPending, isError, randomJoke, loading, getRandomJoke } = useJokes();
 
   if (isPending) {
     return (
@@ -40,7 +25,6 @@ function Jokes() {
   }
 
   if (isError) {
-    console.error(error);
     return (
       <div className="font-bold text-red-700 my-8">There was an error.</div>
     );
@@ -59,11 +43,7 @@ function Jokes() {
       </article>
 
       <button
-        onClick={() => {
-          setLoading(true);
-          setRandomJoke(getRandom(jokes));
-          setLoading(false);
-        }}
+        onClick={getRandomJoke}
         disabled={loading}
         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       >

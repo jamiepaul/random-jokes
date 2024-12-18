@@ -1,5 +1,5 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Jokes from './Jokes';
+import Jokes from './components/Jokes';
 
 function App() {
   return (
