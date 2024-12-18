@@ -16,17 +16,15 @@ export type APIResponse = {
 function Jokes() {
   const { isPending, isError, randomJoke, loading, getRandomJoke } = useJokes();
 
+  if (isError) {
+    throw new Error('Error fetching jokes');
+  }
+
   if (isPending) {
     return (
       <div className="font-bold text-xl text-red-700 my-8">
         Loading jokes...
       </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="font-bold text-red-700 my-8">There was an error.</div>
     );
   }
 

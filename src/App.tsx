@@ -1,5 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Jokes from './components/Jokes';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
@@ -8,7 +9,9 @@ function App() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Random Joke Generator
         </h1>
-        <Jokes />
+        <ErrorBoundary>
+          <Jokes />
+        </ErrorBoundary>
       </section>
       <ReactQueryDevtools initialIsOpen={false} />
     </main>
